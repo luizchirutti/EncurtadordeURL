@@ -1,9 +1,9 @@
-import { Request, response, Response } from 'express'
+import { Request, Response } from 'express'
 import shortId from 'shortid'
 import { config } from '../config/Constants'
 
 export class URLController {
-    public async shorten(req: Request, res: Response): Promise<void> {
+    public async shorten(req: Request, response: Response): Promise<void> {
         //conferir exitencia
         //criar hash
         const { originURL } = req.body

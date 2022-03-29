@@ -13,16 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.URLController = void 0;
-const express_1 = require("express");
 const shortid_1 = __importDefault(require("shortid"));
 const Constants_1 = require("../config/Constants");
 class URLController {
-    shorten(req, res) {
+    shorten(req, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { originURL } = req.body;
             const hash = shortid_1.default.generate();
             const shortURL = `${Constants_1.config.API_URL}/${hash}`;
-            express_1.response.json({ originURL, hash, shortURL });
+            response.json({ originURL, hash, shortURL });
         });
     }
 }
