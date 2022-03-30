@@ -24,6 +24,17 @@ class URLController {
             response.json({ originURL, hash, shortURL });
         });
     }
+    redirect(req, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { hash } = req.params;
+            const url = {
+                originURL: 'https://cloud.mongodb.com/v2/621ec82fbca51056dc4ace5b#clusters/connect?clusterId=Cluster0',
+                hash: 'FzhG3NGUs',
+                shortURL: 'http://localhost:5000/FzhG3NGUs'
+            };
+            response.redirect(url.originURL);
+        });
+    }
 }
 exports.URLController = URLController;
 //# sourceMappingURL=URLController.js.map
