@@ -34,12 +34,12 @@ class URLController {
     redirect(req, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { hash } = req.params;
-            const url = {
-                originURL: 'https://cloud.mongodb.com/v2/621ec82fbca51056dc4ace5b#clusters/connect?clusterId=Cluster0',
-                hash: 'FzhG3NGUs',
-                shortURL: 'http://localhost:5000/FzhG3NGUs'
-            };
-            response.redirect(url.originURL);
+            const url = yield URL_1.URLModel.findOne({ hash });
+            if (url) {
+                response.redirect(url.originURL);
+                return;
+            }
+            response.status(400).json({ error: 'URL not found' });
         });
     }
 }

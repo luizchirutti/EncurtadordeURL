@@ -8,7 +8,7 @@ export class URLController {
         //conferir exitencia
         const { originURL } = req.body
         const url = await URLModel.findOne({ originURL })
-        if (url){
+        if (url) {
             response.json(url)
             return
         }
@@ -18,7 +18,7 @@ export class URLController {
         //salvar no banco
         const newURL = await URLModel.create({ hash, shortURL, originURL })
         //retornar URL
-        response.json({originURL, hash, shortURL})
+        response.json({ originURL, hash, shortURL })
 
 
     }
@@ -26,13 +26,14 @@ export class URLController {
     public async redirect(req: Request, response: Response): Promise<void> {
         // pegar o hash
         const { hash } = req.params
-        // encontrar URL original pelo hash
-        const url = {
-            originURL: 'https://cloud.mongodb.com/v2/621ec82fbca51056dc4ace5b#clusters/connect?clusterId=Cluster0',
-            hash: 'FzhG3NGUs',
-            shortURL: 'http://localhost:5000/FzhG3NGUs'
+        const url = await URLModel.findOne ({ hash })
+
+        if (url) {
+            response.redirect(url.originURL)
+            return
         }
-        // redirecionar para a URL original a partir da URL encontrada do DB
-        response.redirect(url.originURL)
+        
+        response.status(400).json({ error: 'URL not found' })
+
     }
 }
