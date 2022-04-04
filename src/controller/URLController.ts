@@ -1,10 +1,13 @@
 import { Request, Response } from 'express'
 import shortId from 'shortid'
+import { URLModel } from '../../dist/database/model/URL'
 import { config } from '../config/Constants'
 
 export class URLController {
     public async shorten(req: Request, response: Response): Promise<void> {
         //conferir exitencia
+        const { originURL } = req.body
+        URLModel.findOne({ originURL })
         //criar hash
         const { originURL } = req.body
         const hash = shortId.generate()
