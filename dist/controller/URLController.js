@@ -20,10 +20,14 @@ class URLController {
     shorten(req, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { originURL } = req.body;
-            URL_1.URLModel.findOne({ originURL });
-            const { originURL } = req.body;
+            const url = yield URL_1.URLModel.findOne({ originURL });
+            if (url) {
+                response.json(url);
+                return;
+            }
             const hash = shortid_1.default.generate();
             const shortURL = `${Constants_1.config.API_URL}/${hash}`;
+            const newURL = yield URL_1.URLModel.create({ hash, shortURL, originURL });
             response.json({ originURL, hash, shortURL });
         });
     }

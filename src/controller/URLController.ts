@@ -7,12 +7,16 @@ export class URLController {
     public async shorten(req: Request, response: Response): Promise<void> {
         //conferir exitencia
         const { originURL } = req.body
-        URLModel.findOne({ originURL })
+        const url = await URLModel.findOne({ originURL })
+        if (url){
+            response.json(url)
+            return
+        }
         //criar hash
-        const { originURL } = req.body
         const hash = shortId.generate()
         const shortURL = `${config.API_URL}/${hash}`
         //salvar no banco
+        const newURL = await URLModel.create({ hash, shortURL, originURL })
         //retornar URL
         response.json({originURL, hash, shortURL})
 
